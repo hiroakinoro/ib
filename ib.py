@@ -12,7 +12,7 @@ import pandas as pd
 st.title("ib データ選択アプリ")
 
 # CSVアップロード
-uploaded_file = st.file_uploader("originalデータ（CSV）をアップロードしてください", type="csv")
+uploaded_file = st.file_uploader("オリジナルデータ（CSV）をアップロードしてください", type="csv")
 
 if uploaded_file is not None:
     try:
@@ -26,7 +26,7 @@ if uploaded_file is not None:
     selected_rows = []
 
     for name, group in df.groupby("1. Name"):
-        st.subheader(f"選手: {name}")
+        st.subheader(f"さん: {name}")
         test_dates = group["14. Test Date / Time"].unique()
         selected_date = st.selectbox(f"{name} さんの測定日を選んでください", test_dates, key=name)
         selected_row = group[group["14. Test Date / Time"] == selected_date]
@@ -35,9 +35,9 @@ if uploaded_file is not None:
 
     if selected_rows:
         result_df = pd.DataFrame(selected_rows).reset_index(drop=True)
-        st.write("✅ 選択された代表データ", result_df)
+        st.write("✅ 選択されたデータ", result_df)
 
-        # CSVバイトデータとして書き出し
+        # CSVとして書き出し
         csv_bytes = result_df.to_csv(index=False, encoding="utf-8-sig").encode("utf-8-sig")
 
         st.download_button(
