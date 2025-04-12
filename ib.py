@@ -9,7 +9,7 @@ import streamlit as st
 import pandas as pd
 
 # タイトル
-st.title("InBody データ選択アプリ")
+st.title("ib データ選択アプリ")
 
 # CSVアップロード
 uploaded_file = st.file_uploader("originalデータ（CSV）をアップロードしてください", type="csv")
@@ -37,12 +37,12 @@ if uploaded_file is not None:
         result_df = pd.DataFrame(selected_rows).reset_index(drop=True)
         st.write("✅ 選択された代表データ", result_df)
 
-        # CSVバイトデータとして書き出し（utf-8-sigでBOM付き）
+        # CSVバイトデータとして書き出し
         csv_bytes = result_df.to_csv(index=False, encoding="utf-8-sig").encode("utf-8-sig")
 
         st.download_button(
-            label="💾 CSVをダウンロード（文字化けなし）",
+            label="💾 CSVをダウンロード",
             data=csv_bytes,
-            file_name="InBody代表データ_output.csv",
+            file_name="ib_output.csv",
             mime="text/csv"
         )
